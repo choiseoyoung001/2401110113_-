@@ -7,140 +7,280 @@
 </head>
 
 <style>
-     body {
-        background-color: #f5f5f5;
-        color: #333;
-        font-family: Arial, sans-serif;
+     * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    body {
+      background: #d0d0d0;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding: 32px;
     }
-    .btns {
-        display: inline-flex;
-        padding: 20px 20px;
-        background-color: #007BFF;
-        color: #fff;
-        cursor: pointer;
-        border-radius: 5px;
-        margin: 20px;
+ 
+    .contact-btn {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #6200b3;
+      cursor: pointer;
+      margin-bottom: 40px;
+      background: none;
+      border: none;
+    }
+    .contact-btn:hover { opacity: 0.7; }
+ 
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 24px;
+    }
+ 
+    .folder-card {
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform 0.15s;
+      overflow: hidden;
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+    .folder-card:hover { transform: scale(1.05); }
+ 
+    .folder-tab {
+      height: 30px;
+      width: 55%;
+      border-radius: 10px 10px 0 0;
+      margin-bottom: -4px;
+    }
+ 
+    .folder-body {
+      flex: 1;
+      border-radius: 0 16px 16px 16px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px 18px;
+    }
+ 
+    .folder-label {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+ 
+    /* 폴더별 색상 */
+    .f-poster  .folder-tab, .f-poster  .folder-body { background: #5a0a00; }
+    .f-poster  .folder-label { color: #e8733a; }
+ 
+    .f-website .folder-tab, .f-website .folder-body { background: #0a0a5a; }
+    .f-website .folder-label { color: #4da6ff; }
+ 
+    .f-package .folder-tab, .f-package .folder-body { background: #003322; }
+    .f-package .folder-label { color: #33cc88; }
+ 
+    .f-ppt     .folder-tab, .f-ppt     .folder-body { background: #3a0000; }
+    .f-ppt     .folder-label { color: #ff6666; }
+ 
+    .f-bi      .folder-tab, .f-bi      .folder-body { background: #2a1a00; }
+    .f-bi      .folder-label { color: #ffaa00; }
+ 
+    .f-video   .folder-tab, .f-video   .folder-body { background: #001a33; }
+    .f-video   .folder-label { color: #00ccff; }
+ 
+    /* 오버레이 */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .overlay.active { display: flex; }
+ 
+    /* 팝업 */
+    .popup {
+      background: #e4e4e4;
+      border-radius: 10px;
+      min-width: 340px;
+      max-width: 500px;
+      width: 90%;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+ 
+    .popup-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #6a6a6a;
+      padding: 9px 14px;
+    }
+ 
+    .popup-close-btn {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #e84040;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+ 
+    .popup-title-text {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+ 
+    .popup-body {
+      padding: 24px 28px;
+    }
+ 
+    .popup-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 8px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      border-radius: 4px;
+      transition: background 0.1s;
+    }
+    .popup-item:last-child { border-bottom: none; }
+    .popup-item:hover { background: #d4d4d4; }
+ 
+    .popup-item .name { flex: 1; }
+    .popup-item .ext  { color: #888; font-size: 13px; min-width: 38px; text-align: right; }
+ 
+    .contact-info p {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #333;
     }
 
-    .popup-close {
-        position: absolute;
-        top: 10px; right: 15px;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    /* 폴더 아이템 hover 효과 */
-    .folder-item {
-        cursor: pointer;
-        padding: 4px 8px;
-        border-radius: 4px;
-        transition: background 0.2s;
-    }
-    .folder-item:hover {
-        background-color: #e0e0e0;
-    }
-
-    /* 팝업 오버레이 */
-    .popup-overlay {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 999;
-    }
-
-    /* 팝업 박스 */
-    .popup-box {
-        position: fixed;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff;
-        padding: 40px;
-        border-radius: 10px;
-        z-index: 1000;
-        min-width: 300px;
-        text-align: center;
-    }
-    
 </style>
 
 <body>
-    <div class="btns" onclick="openPopup('CONTACT')">CONTACT</div>
+    <button class="contact-btn" onclick="openPopup('CONTACT')">CONTACT</button>
     
-    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
-    <div class="popup-box" id="popupBox">
-        <span class="popup-close" onclick="closePopup()">✕</span>
-        <div id="popup-content"></div>
+    <div class="grid">
+        <div class="folder" onclick="openPopup('POSTER')"></div>
+        <div class="folder-tab"></div>
+        <div class="folder-body"><span class="folder-content">POSTER</span></div>
+    </div>
+    
+    <div class="grid">
+        <div class="folder" onclick="openPopup('WEBSITE')"></div>
+        <div class="folder-tab"></div>
+        <div class="folder-body"><span class="folder-content">WEBSITE</span></div>
+    </div>
+    
+    <div class="grid">
+        <div class="folder" onclick="openPopup('PACKAGE')"></div>
+        <div class="folder-tab"></div>
+        <div class="folder-body"><span class="folder-content">PACKAGE</span></div>
+    </div>
+    
+    <div class="grid">
+        <div class="folder" onclick="openPopup('PPT')"></div>
+        <div class="folder-tab"></div>
+        <div class="folder-body"><span class="folder-content">PPT</span></div>
+    </div>
+    
+    <div class="grid">
+        <div class="folder" onclick="openPopup('BI')"></div>
+        <div class="folder-tab"></div>
+        <div class="folder-body"><span class="folder-content">BI</span></div>
+    </div>
+    
+    <div class="grid">
+        <div class="folder" onclick="openPopup('VIDEO')"></div>
+        <div class="folder-tab"></div>
+        <div class="folder-body"><span class="folder-content">VIDEO</span></div>
     </div>
 
-    <div class="folder-grid">
-        <div class="folder-folder__POSTER">
-            <div class="folder-folder__title">POSTER</div>
-            <p class="folder-item" onclick="openPopup('외국인 관광객을 대상으로 한 한국 홍보 포스터')">외국인 관광객을 대상으로 한 한국 홍보 포스터</p>
-        </div>
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+      <div class="popup-titlebar">
+        <button class="popup-close-btn" onclick="closePopup()">✕</button>
+        <span class="popup-title-text" id="popup-title"></span>
+      </div>
+      <div class="popup-body" id="popup-body"></div>
     </div>
-
-    <div class="folder-grid">
-        <div class="folder-folder__WEBSITE">
-            <div class="folder-folder__title">WEBSITE</div>
-            <p class="folder-item" onclick="openPopup('[CASAMIA] 웹사이트 리디자인')">[CASAMIA] 웹사이트 리디자인</p>
-            <p class="folder-item" onclick="openPopup('COVER LETTER')">COVER LETTER</p>
-            <p class="folder-item" onclick="openPopup('PORTFOLIO')">PORTFOLIO</p>
-        </div>
-    </div>
-
-    <div class="folder-grid">
-        <div class="folder-folder__PACKAGE">
-            <div class="folder-folder__title">PACKAGE</div>
-            <p class="folder-item" onclick="openPopup('커피 패키지 디자인')">커피 패키지 디자인</p>
-            <p class="folder-item" onclick="openPopup('초콜렛 패키지 디자인')">초콜렛 패키지 디자인</p>
-        </div>
-    </div>
-
-    <div class="folder-grid">
-        <div class="folder-folder__BI">
-            <div class="folder-folder__title">BI</div>
-            <p class="folder-item" onclick="openPopup('[YOUNGGAGU] BI 리디자인')">[YOUNGGAGU] BI 리디자인</p>
-        </div>
-    </div>
-
-    <div class="folder-grid">
-        <div class="folder-folder__VIDEO">
-            <div class="folder-folder__title">VIDEO</div>
-            <p class="folder-item" onclick="openPopup('자유주제 1')">자유주제 1</p>
-            <p class="folder-item" onclick="openPopup('사진 편집')">사진 편집</p>
-            <p class="folder-item" onclick="openPopup('[DESIGN] antique&vintage')">[DESIGN] antique&vintage</p>
-            <p class="folder-item" onclick="openPopup('자유주제 2')">자유주제 2</p>
-        </div>
-    </div>
+  </div>
 
     <script>
-        // CONTACT 팝업 내용 별도 정의
-        const contactHTML = `
-            <p>Phone : 010-6237-1396</p>
-            <p>E-mail : choiseoyoung00@gmail.com</p>
-            <p>Instagram : @novah4313</p>
-        `;
-
-        function openPopup(text) {
-            const content = document.getElementById('popup-content');
-
-            if (text === 'CONTACT') {
-                content.innerHTML = contactHTML;
-            } else {
-                content.innerHTML = `<p>${text}</p>`;
-            }
-
-            document.getElementById('popupOverlay').style.display = 'block';
-            document.getElementById('popupBox').style.display = 'block';
-        }
-
-        function closePopup() {
-            document.getElementById('popupOverlay').style.display = 'none';
-            document.getElementById('popupBox').style.display = 'none';
-        }
+        const folderData = {
+      POSTER: [
+        { name: '외국인 관광객을 대상으로 한 한국 홍보 포스터', ext: '.ai' }
+      ],
+      WEBSITE: [
+        { name: '[CASAMIA] 웹사이트 리디자인', ext: '.ai' },
+        { name: 'COVER LETTER', ext: '.ai' },
+        { name: 'PORTFOLIO', ext: '.ai' }
+      ],
+      PACKAGE: [
+        { name: '커피 패키지 디자인', ext: '.ai' },
+        { name: '초콜렛 패키지 디자인', ext: '.ai' }
+      ],
+      PPT: [
+        { name: '웹사이트 리디자인 기획', ext: '.pptx' },
+        { name: '웹사이트 리디자인 시안', ext: '.pptx' },
+        { name: '커피 패키지 기획', ext: '.pptx' },
+        { name: '초콜렛 패키지 기획', ext: '.pptx' },
+        { name: '졸업작품 기획', ext: '.pptx' },
+        { name: '졸업작품 진행사항', ext: '.pptx' },
+        { name: '매체 조사', ext: '.pptx' },
+        { name: '기획안', ext: '.pptx' }
+      ],
+      BI: [
+        { name: '[YOUNGGAGU] BI 리디자인', ext: '.ai' }
+      ],
+      VIDEO: [
+        { name: '자유주제 1', ext: '.mp4' },
+        { name: '사진 편집', ext: '.mp4' },
+        { name: '[DESIGN] antique&amp;vintage', ext: '.mp4' },
+        { name: '자유주제 2', ext: '.mp4' }
+      ]
+    };
+ 
+    function openFolder(name) {
+      const items = folderData[name];
+      document.getElementById('popup-title').textContent = name;
+      document.getElementById('popup-body').innerHTML = items.map(i =>
+        `<div class="popup-item">
+          <span class="name">${i.name}</span>
+          <span class="ext">${i.ext}</span>
+        </div>`
+      ).join('');
+      document.getElementById('overlay').classList.add('active');
+    }
+ 
+    function openContact() {
+      document.getElementById('popup-title').textContent = 'CONTACT';
+      document.getElementById('popup-body').innerHTML = `
+        <div class="contact-info">
+          <p>Phone : 010-6237-1396</p>
+          <p>E-mail : choiseoyoung00@gmail.com</p>
+          <p>Instagram : @novah4313</p>
+        </div>`;
+      document.getElementById('overlay').classList.add('active');
+    }
+ 
+    function closePopup() {
+      document.getElementById('overlay').classList.remove('active');
+    }
+ 
+ 
     </script>
 
 </body>
