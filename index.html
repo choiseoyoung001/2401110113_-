@@ -4,194 +4,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>That's MINE</title>
+</head>
+
 <style>
-    body {
-        margin: 0;
-        padding: 0;
+     body {
+        background-color: #f5f5f5;
+        color: #333;
         font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
     }
-
-    main {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px 20px;
-    }
-
-    .folder-folder__title {
-        text-align: right;
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-    
     .btns {
-        position: fixed;
-        font-size: 30px;
+        display: inline-flex;
+        padding: 20px 20px;
+        background-color: #007BFF;
+        color: #fff;
         cursor: pointer;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 20px 20px 20px 20px;
-    }
-
-    .popup-open, .popup-close {
-        cursor: pointer;
-        display: block;
-    }
-
-    .popup-open {
-        background-color: #fff;
-        display: none;
-        position: fixed;
-        font-size: 30px;
-        top: 40px;
-        left: 20px;
-        width: 80%;
-        padding: 30px 20px;
+        border-radius: 5px;
+        margin: 20px;
     }
 
     .popup-close {
-        position: content;
+        position: absolute;
+        top: 10px; right: 15px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
     }
 
-.folder-grid {
-    padding: 20px;
-    display: flex;
-    gap: 50px;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
+    /* 폴더 아이템 hover 효과 */
+    .folder-item {
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background 0.2s;
+    }
+    .folder-item:hover {
+        background-color: #e0e0e0;
+    }
 
-.folder-folder__POSTER {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.folder-folder__WEBSITE {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.folder-folder__PACKAGE {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.folder-folder__PPT {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.folder-folder__BI {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.folder-folder__VIDEO {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    /* 팝업 오버레이 */
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+    }
+
+    /* 팝업 박스 */
+    .popup-box {
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        z-index: 1000;
+        min-width: 300px;
+        text-align: center;
+    }
+    
 </style>
 
-</head>
 <body>
     <div class="btns" onclick="openPopup('CONTACT')">CONTACT</div>
-    <span class="popup-open">
-    <span class="popup-close" onclick="closePopup('X')">X</span>    
-        <p>Phone : 010-6237-1396</p>
-        <p>E-mail : choiseoyoung00@gmail.com</p>
-        <p>Instagram : @novah4313</p>
-    </span>
     
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+    <div class="popup-box" id="popupBox">
+        <span class="popup-close" onclick="closePopup()">✕</span>
+        <div id="popup-content"></div>
+    </div>
 
-
-</html>
     <div class="folder-grid">
         <div class="folder-folder__POSTER">
             <div class="folder-folder__title">POSTER</div>
-            
-            <div class="folder-folder__content" onclick="openPopup('POSTER')">
-                <p>외국인 관광객을 대상으로 한 한국 홍보 포스터</p>
-            </div>
+            <p class="folder-item" onclick="openPopup('외국인 관광객을 대상으로 한 한국 홍보 포스터')">외국인 관광객을 대상으로 한 한국 홍보 포스터</p>
         </div>
     </div>
-    
-    <div class="folder-grid" data-section="WEBSITE">
+
+    <div class="folder-grid">
         <div class="folder-folder__WEBSITE">
             <div class="folder-folder__title">WEBSITE</div>
-            <p>[CASAMIA] 웹사이트 리디자인 </p>
-            <p>COVER LATTER</p>
-            <p>PORTFOLIO</p>
+            <p class="folder-item" onclick="openPopup('[CASAMIA] 웹사이트 리디자인')">[CASAMIA] 웹사이트 리디자인</p>
+            <p class="folder-item" onclick="openPopup('COVER LETTER')">COVER LETTER</p>
+            <p class="folder-item" onclick="openPopup('PORTFOLIO')">PORTFOLIO</p>
         </div>
     </div>
-    <div class="folder-grid" data-section="PACKAGE">
+
+    <div class="folder-grid">
         <div class="folder-folder__PACKAGE">
             <div class="folder-folder__title">PACKAGE</div>
-            <p>커피 패키지 디자인</p>
-            <p>초콜렛 패키지 디자인</p>
+            <p class="folder-item" onclick="openPopup('커피 패키지 디자인')">커피 패키지 디자인</p>
+            <p class="folder-item" onclick="openPopup('초콜렛 패키지 디자인')">초콜렛 패키지 디자인</p>
         </div>
     </div>
-    <div class="folder-grid" data-section="PPT">
-        <div class="folder-folder__PPT">
-            <div class="folder-folder__title">PPT</div>
-            <p>웹사이트 리디자인 기획</p>
-            <p>웹사이트 리디자인 시안</p>
-            <p>커피 패키지 기획</p>
-            <p>초콜렛 패키지 기획</p>
-            <p>졸업작품 기획</p>
-            <p>졸업작품 진행사항</p>
-            <p>매체 조사</p>
-            <p>기획안</p>
-        </div>
-    </div>
-    <div class="folder-grid" data-section="BI">
+
+    <div class="folder-grid">
         <div class="folder-folder__BI">
             <div class="folder-folder__title">BI</div>
-            <p>[YOUNGGAGU] BI 리디자인</p>
+            <p class="folder-item" onclick="openPopup('[YOUNGGAGU] BI 리디자인')">[YOUNGGAGU] BI 리디자인</p>
         </div>
     </div>
-    <div class="folder-grid" data-section="VIDEO">
+
+    <div class="folder-grid">
         <div class="folder-folder__VIDEO">
             <div class="folder-folder__title">VIDEO</div>
-            <p>자유주제 1</p>
-            <p>사진 편집</p>
-            <p>[DESIGN]] antique&vintage</p>
-            <p>자유주제 2</p>
+            <p class="folder-item" onclick="openPopup('자유주제 1')">자유주제 1</p>
+            <p class="folder-item" onclick="openPopup('사진 편집')">사진 편집</p>
+            <p class="folder-item" onclick="openPopup('[DESIGN] antique&vintage')">[DESIGN] antique&vintage</p>
+            <p class="folder-item" onclick="openPopup('자유주제 2')">자유주제 2</p>
         </div>
     </div>
 
     <script>
-        function openPopup(btns, section) {
-            const popup = document.querySelector('.popup-open');
-            popup.style.display = 'block';
+        // CONTACT 팝업 내용 별도 정의
+        const contactHTML = `
+            <p>Phone : 010-6237-1396</p>
+            <p>E-mail : choiseoyoung00@gmail.com</p>
+            <p>Instagram : @novah4313</p>
+        `;
+
+        function openPopup(text) {
+            const content = document.getElementById('popup-content');
+
+            if (text === 'CONTACT') {
+                content.innerHTML = contactHTML;
+            } else {
+                content.innerHTML = `<p>${text}</p>`;
+            }
+
+            document.getElementById('popupOverlay').style.display = 'block';
+            document.getElementById('popupBox').style.display = 'block';
         }
 
-        function closePopup(section) {
-            const popup = document.querySelector('.popup-open, .popup-close');
-            popup.style.display = 'none';
+        function closePopup() {
+            document.getElementById('popupOverlay').style.display = 'none';
+            document.getElementById('popupBox').style.display = 'none';
         }
     </script>
 
