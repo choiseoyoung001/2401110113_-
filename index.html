@@ -18,8 +18,15 @@
         align-items: center;
         justify-content: center;
         padding: 40px 20px;
-}
+    }
 
+    .folder-folder__title {
+        text-align: right;
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
     .btns {
         position: fixed;
         font-size: 30px;
@@ -60,49 +67,53 @@
 }
 
 .folder-folder__POSTER {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .folder-folder__WEBSITE {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .folder-folder__PACKAGE {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .folder-folder__PPT {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .folder-folder__BI {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .folder-folder__VIDEO {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.folder-folder__POSTER {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
 </style>
 
 </head>
@@ -115,13 +126,16 @@
         <p>Instagram : @novah4313</p>
     </span>
     
-</body>
+
 
 </html>
     <div class="folder-grid">
         <div class="folder-folder__POSTER">
             <div class="folder-folder__title">POSTER</div>
-            <p>외국인 관광객을 대상으로 한 한국 홍보 포스터</p>
+            
+            <div class="folder-folder__content" onclick="openPopup('POSTER')">
+                <p>외국인 관광객을 대상으로 한 한국 홍보 포스터</p>
+            </div>
         </div>
     </div>
     
